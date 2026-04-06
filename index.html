@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matthew Mahasay — IT Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0c10;
+  --bg2:#111318;
+  --bg3:#181c24;
+  --accent:#00d4a0;
+  --accent2:#0ea5e9;
+  --text:#f0f2f6;
+  --muted:#8892a4;
+  --border:#1e2330;
+  --card:#13161e;
+}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6;overflow-x:hidden}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(10,12,16,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:60px}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;letter-spacing:0.05em;color:var(--accent)}
+.nav-links{display:flex;gap:1.5rem;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:0.85rem;letter-spacing:0.03em;transition:color 0.2s}
+.nav-links a:hover{color:var(--text)}
+
+/* HERO */
+.hero{min-height:90vh;display:flex;align-items:center;padding:4rem 2rem 2rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(0,212,160,0.06) 0%,transparent 70%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-100px;left:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(14,165,233,0.05) 0%,transparent 70%);pointer-events:none}
+.hero-inner{max-width:900px;margin:0 auto;width:100%}
+.hero-tag{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(0,212,160,0.08);border:1px solid rgba(0,212,160,0.2);color:var(--accent);font-size:0.75rem;font-family:'DM Mono',monospace;padding:0.35rem 0.75rem;border-radius:2rem;margin-bottom:1.5rem;letter-spacing:0.05em}
+.hero-tag span{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+h1{font-family:'Syne',sans-serif;font-size:clamp(2.8rem,6vw,5rem);font-weight:800;line-height:1.05;letter-spacing:-0.02em;margin-bottom:1.5rem}
+h1 .name{display:block}
+h1 .tagline{display:block;color:var(--accent);font-size:clamp(1.4rem,3vw,2.4rem);font-weight:600}
+.hero-desc{font-size:1.05rem;color:var(--muted);max-width:600px;line-height:1.8;margin-bottom:2.5rem}
+.hero-cta{display:flex;gap:1rem;flex-wrap:wrap}
+.btn{padding:0.7rem 1.5rem;border-radius:0.4rem;font-size:0.9rem;font-weight:500;text-decoration:none;transition:all 0.2s;cursor:pointer;border:none;font-family:'DM Sans',sans-serif}
+.btn-primary{background:var(--accent);color:#000}
+.btn-primary:hover{background:#00f0b8;transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border)}
+.btn-ghost:hover{border-color:var(--muted);transform:translateY(-1px)}
+
+/* STATS BAR */
+.stats-bar{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1.5rem 2rem}
+.stats-inner{max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1.5rem}
+.stat{text-align:center}
+.stat-num{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--accent)}
+.stat-label{font-size:0.75rem;color:var(--muted);letter-spacing:0.05em;text-transform:uppercase;margin-top:0.2rem}
+
+/* SECTIONS */
+section{padding:5rem 2rem}
+.section-inner{max-width:900px;margin:0 auto}
+.section-label{font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--accent);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.75rem}
+.section-title{font-family:'Syne',sans-serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;margin-bottom:1rem}
+.section-sub{color:var(--muted);max-width:550px;margin-bottom:3rem;font-size:0.95rem}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+@media(max-width:640px){.about-grid{grid-template-columns:1fr}}
+.about-text p{color:var(--muted);line-height:1.85;margin-bottom:1rem;font-size:0.95rem}
+.about-text p strong{color:var(--text);font-weight:500}
+.about-facts{display:flex;flex-direction:column;gap:0.75rem}
+.fact{display:flex;align-items:center;gap:0.75rem;padding:0.85rem 1rem;background:var(--card);border:1px solid var(--border);border-radius:0.5rem;font-size:0.85rem}
+.fact-icon{width:28px;height:28px;border-radius:0.35rem;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;flex-shrink:0}
+.fact-icon.green{background:rgba(0,212,160,0.12);color:var(--accent)}
+.fact-icon.blue{background:rgba(14,165,233,0.12);color:var(--accent2)}
+.fact-label{color:var(--muted);font-size:0.75rem}
+.fact-val{color:var(--text);font-weight:500}
+
+/* SKILLS */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:0.75rem}
+.skill-chip{background:var(--card);border:1px solid var(--border);border-radius:0.5rem;padding:0.85rem 1rem;transition:border-color 0.2s,transform 0.2s}
+.skill-chip:hover{border-color:rgba(0,212,160,0.3);transform:translateY(-2px)}
+.skill-name{font-size:0.85rem;font-weight:500;margin-bottom:0.2rem}
+.skill-type{font-size:0.7rem;color:var(--muted);font-family:'DM Mono',monospace}
+.skill-bar{height:2px;background:var(--border);border-radius:1px;margin-top:0.6rem;overflow:hidden}
+.skill-fill{height:100%;border-radius:1px;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+
+/* PROJECTS */
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.25rem}
+.project-card{background:var(--card);border:1px solid var(--border);border-radius:0.75rem;overflow:hidden;transition:border-color 0.2s,transform 0.2s;text-decoration:none;display:flex;flex-direction:column}
+.project-card:hover{border-color:rgba(0,212,160,0.25);transform:translateY(-3px)}
+.card-img{width:100%;height:160px;object-fit:cover;background:var(--bg3);display:block}
+.card-body{padding:1.25rem;flex:1;display:flex;flex-direction:column}
+.card-badges{display:flex;gap:0.4rem;margin-bottom:0.75rem;flex-wrap:wrap}
+.badge{font-size:0.65rem;padding:0.25rem 0.6rem;border-radius:2rem;font-family:'DM Mono',monospace;letter-spacing:0.04em}
+.badge-active{background:rgba(0,212,160,0.1);color:var(--accent);border:1px solid rgba(0,212,160,0.2)}
+.badge-soon{background:rgba(14,165,233,0.08);color:var(--accent2);border:1px solid rgba(14,165,233,0.15)}
+.badge-done{background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid var(--border)}
+.card-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--text);margin-bottom:0.5rem}
+.card-desc{font-size:0.82rem;color:var(--muted);line-height:1.65;flex:1}
+.card-tools{margin-top:1rem;padding-top:0.75rem;border-top:1px solid var(--border);display:flex;gap:0.35rem;flex-wrap:wrap}
+.tool-tag{font-size:0.65rem;color:var(--muted);font-family:'DM Mono',monospace;padding:0.15rem 0.5rem;background:rgba(255,255,255,0.04);border-radius:0.2rem}
+
+/* TIMELINE */
+.timeline{display:flex;flex-direction:column;gap:0;position:relative}
+.timeline::before{content:'';position:absolute;left:11px;top:0;bottom:0;width:1px;background:var(--border)}
+.tl-item{display:flex;gap:1.5rem;padding-bottom:2.5rem;position:relative}
+.tl-dot{width:23px;height:23px;border-radius:50%;border:2px solid var(--accent);background:var(--bg);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;z-index:1}
+.tl-dot-inner{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.tl-content{}
+.tl-date{font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--accent);letter-spacing:0.08em;margin-bottom:0.3rem}
+.tl-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:0.25rem}
+.tl-desc{font-size:0.83rem;color:var(--muted);line-height:1.65}
+
+/* CONTACT */
+.contact-box{background:var(--card);border:1px solid var(--border);border-radius:1rem;padding:3rem;text-align:center;position:relative;overflow:hidden}
+.contact-box::before{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:300px;height:200px;background:radial-gradient(circle,rgba(0,212,160,0.07),transparent 70%);pointer-events:none}
+.contact-box h3{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;margin-bottom:0.75rem}
+.contact-box p{color:var(--muted);margin-bottom:2rem;font-size:0.95rem}
+.contact-links{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap}
+
+/* FOOTER */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;font-size:0.8rem;color:var(--muted);font-family:'DM Mono',monospace}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">MM</span>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#journey">Journey</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag"><span></span>Open to IT Support & Help Desk roles</div>
+    <h1>
+      <span class="name">Matthew Mahasay</span>
+      <span class="tagline">Building labs. Learning by doing.</span>
+    </h1>
+    <p class="hero-desc">
+      Aspiring IT professional turning real-world enterprise scenarios into hands-on home lab experience.
+      I document everything — the wins, the troubleshooting, and the lessons learned along the way.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">View My Projects</a>
+
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat">
+      <div class="stat-num">6</div>
+      <div class="stat-label">Lab Projects</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Active Labs</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">10+</div>
+      <div class="stat-label">Technologies</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">2026</div>
+      <div class="stat-label">Target Hire Year</div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about" style="background:var(--bg)">
+  <div class="section-inner">
+    <div class="section-label">// about me</div>
+    <h2 class="section-title">More than a resume</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm an aspiring IT Support professional with a focus on <strong>Service Desk operations, networking, and enterprise infrastructure</strong>. Rather than just studying theory, I build environments that simulate what real corporate IT looks like — then break and fix them.</p>
+        <p>Every lab I build is documented with the tools used, problems encountered, and what I learned. My goal is to walk into any IT Support role ready to contribute from day one.</p>
+        <p>Currently deepening my knowledge across <strong>Active Directory, Windows Server, cloud platforms, and cybersecurity fundamentals</strong> — with more projects rolling out through 2026.</p>
+      </div>
+      <div class="about-facts">
+        <div class="fact">
+          <div class="fact-icon green">📍</div>
+          <div>
+            <div class="fact-label">Location</div>
+            <div class="fact-val">Sydney, Australia</div>
+          </div>
+        </div>
+        <div class="fact">
+          <div class="fact-icon blue">🎯</div>
+          <div>
+            <div class="fact-label">Target Role</div>
+            <div class="fact-val">IT Support / Help Desk</div>
+          </div>
+        </div>
+        <div class="fact">
+          <div class="fact-icon green">🖥️</div>
+          <div>
+            <div class="fact-label">Focus Areas</div>
+            <div class="fact-val">Networking, AD, Cloud, Security</div>
+          </div>
+        </div>
+        <div class="fact">
+          <div class="fact-icon blue">📚</div>
+          <div>
+            <div class="fact-label">Learning Style</div>
+            <div class="fact-val">Hands-on home labs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" style="background:var(--bg2)">
+  <div class="section-inner">
+    <div class="section-label">// skills & tools</div>
+    <h2 class="section-title">What I work with</h2>
+    <p class="section-sub">Developed through hands-on lab environments, not just coursework.</p>
+    <div class="skills-grid">
+      <div class="skill-chip">
+        <div class="skill-name">Active Directory</div>
+        <div class="skill-type">identity & access</div>
+        <div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div>
+      </div>
+      <div class="skill-chip">
+        <div class="skill-name">Windows Server</div>
+        <div class="skill-type">infrastructure</div>
+        <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
+      </div>
+      <div class="skill-chip">
+        <div class="skill-name">Networking & VLANs</div>
+        <div class="skill-type">networking</div>
+        <div class="skill-bar"><div class="skill-fill" style="width:65%"></div></div>
+      </div>
+      <div class="skill-chip">
+        <div class="skill-name">Microsoft 365</div>
+        <div class="skill-type">productivity suite</div>
+        <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+      </div>
+      <div class="skill-chip">
+        <div class="skill-name">Ticketing Systems</div>
+        <div class="skill-type">service desk</div>
+        <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
+      </div>
+      <div class="skill-chip">
+        <div class="skill-name">Cisco Packet Tracer</div>
+        <div class="skill-type">network sim</div>
+        <div class="skill-bar"><div class="skill-fill" style="width:60%"></div></div>
+      </div>
+      <div class="skill-chip">
+        <div class="skill-name">Wireshark</div>
+        <div class="skill-type">monitoring</div>
+        <div class="skill-bar"><div class="skill-fill" style="width:50%"></div></div>
+      </div>
+      <div class="skill-chip">
+        <div class="skill-name">Customer Support</div>
+        <div class="skill-type">soft skills</div>
+        <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" style="background:var(--bg)">
+  <div class="section-inner">
+    <div class="section-label">// projects</div>
+    <h2 class="section-title">Lab work & documentation</h2>
+    <p class="section-sub">Each project simulates a real enterprise environment. Click to explore the details, tools used, and lessons learned.</p>
+    <div class="projects-grid">
+
+      <a href="pages/Enterprise Infrastructure.html" class="project-card">
+        <img class="card-img" src="images/project1.png" alt="Enterprise Infrastructure">
+        <div class="card-body">
+          <div class="card-badges"><span class="badge badge-active">Active</span></div>
+          <div class="card-title">Enterprise Infrastructure Lab</div>
+          <div class="card-desc">Simulated corporate IT environment — Active Directory, virtual servers, secure file services, backup systems, and infrastructure monitoring.</div>
+          <div class="card-tools">
+            <span class="tool-tag">Windows Server</span>
+            <span class="tool-tag">AD DS</span>
+            <span class="tool-tag">Hyper-V</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="pages/Networking.html" class="project-card">
+        <img class="card-img" src="images/project2.png" alt="Networking">
+        <div class="card-body">
+          <div class="card-badges"><span class="badge badge-active">Active</span></div>
+          <div class="card-title">Networking Lab</div>
+          <div class="card-desc">Hands-on VLAN setup, IP routing, and connectivity testing using real hardware and simulators. Includes enterprise network topology design.</div>
+          <div class="card-tools">
+            <span class="tool-tag">GNS3</span>
+            <span class="tool-tag">Packet Tracer</span>
+            <span class="tool-tag">Wireshark</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="https://github.com/MatthewPortfolioTech/HomeLab_Projects.git" class="project-card">
+        <img class="card-img" src="images/Website.png" alt="Web Dev">
+        <div class="card-body">
+          <div class="card-badges"><span class="badge badge-done">Completed</span></div>
+          <div class="card-title">Web Development Project</div>
+          <div class="card-desc">This portfolio — responsive site built with HTML, CSS, and JavaScript. Focused on clean layout, animations, and user experience.</div>
+          <div class="card-tools">
+            <span class="tool-tag">HTML</span>
+            <span class="tool-tag">CSS</span>
+            <span class="tool-tag">JavaScript</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="pages/Cloud Infrastructure.html" class="project-card">
+        <img class="card-img" src="images/project3.png" alt="Cloud">
+        <div class="card-body">
+          <div class="card-badges"><span class="badge badge-soon">Q3 2026</span></div>
+          <div class="card-title">Cloud Infrastructure Lab</div>
+          <div class="card-desc">Virtual networks, compute resources, storage, identity services, and secure cloud connectivity. Deploying and operating in a real cloud environment.</div>
+          <div class="card-tools">
+            <span class="tool-tag">Azure</span>
+            <span class="tool-tag">AWS</span>
+            <span class="tool-tag">Terraform</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="pages/Cybersecurity.html" class="project-card">
+        <img class="card-img" src="images/project4.png" alt="Cybersecurity">
+        <div class="card-body">
+          <div class="card-badges"><span class="badge badge-active">In Progress</span></div>
+          <div class="card-title">Cybersecurity Fundamentals</div>
+          <div class="card-desc">Firewall configuration, vulnerability scanning, threat detection, and system hardening. Built to simulate real defensive security operations.</div>
+          <div class="card-tools">
+            <span class="tool-tag">pfSense</span>
+            <span class="tool-tag">Nessus</span>
+            <span class="tool-tag">Snort</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="pages/IT AutomationScripting.html" class="project-card">
+        <img class="card-img" src="images/project5.png" alt="Automation">
+        <div class="card-body">
+          <div class="card-badges"><span class="badge badge-soon">Q4 2026</span></div>
+          <div class="card-title">IT Automation & Scripting</div>
+          <div class="card-desc">Automating routine IT tasks — user provisioning, system monitoring, and bulk admin operations — to reduce manual workload and improve efficiency.</div>
+          <div class="card-tools">
+            <span class="tool-tag">PowerShell</span>
+            <span class="tool-tag">Python</span>
+            <span class="tool-tag">Task Scheduler</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- JOURNEY / TIMELINE -->
+<section id="journey" style="background:var(--bg2)">
+  <div class="section-inner">
+    <div class="section-label">// learning journey</div>
+    <h2 class="section-title">How I got here</h2>
+    <p class="section-sub">A timeline of milestones, labs completed, and what's coming next.</p>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+        <div class="tl-content">
+          <div class="tl-date">Early 2025</div>
+          <div class="tl-title">Started building home labs</div>
+          <div class="tl-desc">Decided to go beyond studying — began setting up real virtual environments to simulate enterprise IT scenarios from scratch.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+        <div class="tl-content">
+          <div class="tl-date">Mid 2025</div>
+          <div class="tl-title">Active Directory & Windows Server</div>
+          <div class="tl-desc">Deployed a full AD DS environment with domain controllers, user provisioning, group policies, and shared file services.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+        <div class="tl-content">
+          <div class="tl-date">Late 2025</div>
+          <div class="tl-title">Networking & Packet Tracer labs</div>
+          <div class="tl-desc">Designed multi-network topologies with VLANs, inter-VLAN routing, DHCP, and ACLs. Acquired real hardware — Ubiquiti & TP-Link switches.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+        <div class="tl-content">
+          <div class="tl-date">Early 2026</div>
+          <div class="tl-title">Launched this portfolio + Cybersecurity lab</div>
+          <div class="tl-desc">Built and deployed this site to document and share my work. Started the cybersecurity lab with firewall config and vulnerability scanning.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot" style="border-color:var(--accent2)"><div class="tl-dot-inner" style="background:var(--accent2)"></div></div>
+        <div class="tl-content">
+          <div class="tl-date" style="color:var(--accent2)">Q3–Q4 2026 — Upcoming</div>
+          <div class="tl-title">Cloud & Automation labs</div>
+          <div class="tl-desc">Planning Azure/AWS deployments and PowerShell/Python scripting projects to round out the portfolio before targeting IT Support roles.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="background:var(--bg)">
+  <div class="section-inner">
+    <div class="contact-box">
+      <div class="section-label" style="justify-content:center;display:block;margin-bottom:0.75rem">// contact</div>
+      <h3>Let's connect</h3>
+      <p>I'm actively looking for IT Support and Help Desk opportunities. Feel free to connect with me on GitHub or LinkedIn.</p>
+      <div class="contact-links">
+        <a href="https://github.com/MatthewPortfolioTech/HomeLab_Projects" class="btn btn-primary">GitHub</a>
+        <a href="https://linkedin.com" class="btn btn-ghost">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Matthew Mahasay — Built with HTML, CSS & JavaScript
+</footer>
+
+</body>
+</html>

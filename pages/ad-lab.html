@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Active Directory Lab Documentation — Matthew Mahasay</title>
+<link rel="stylesheet" href="../styles/theme.css">
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-logo">MM</a>
+  <ul class="nav-links">
+    <li><a href="../index.html#about">About</a></li>
+    <li><a href="../index.html#projects">Projects</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<main>
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span>/</span>
+        <a href="Enterprise Infrastructure.html">Enterprise Infrastructure</a>
+        <span>/</span>
+        <a href="documentation.html">Documentation</a>
+        <span>/</span>
+        <span>Active Directory Lab</span>
+      </div>
+      <div class="page-label">// lab documentation</div>
+      <h1>Active Directory Home Lab</h1>
+      <p>Full setup of a Windows Server 2022 Domain Controller in VMware — covering AD DS installation, DNS, static IP, domain promotion, client join, and troubleshooting.</p>
+    </div>
+  </div>
+
+  <!-- CONTENTS -->
+  <section class="section" style="background:var(--bg2)">
+    <div class="section-inner">
+      <div class="section-label">// contents</div>
+      <h2>What's Covered</h2>
+      <div class="next-steps">
+        <div class="next-item">1. VMware Lab Setup</div>
+        <div class="next-item">2. Windows Server Installation</div>
+        <div class="next-item">3. Domain Controller Creation</div>
+        <div class="next-item">4. Static IP Configuration</div>
+        <div class="next-item">5. Active Directory Installation</div>
+        <div class="next-item">6. Domain Promotion</div>
+        <div class="next-item">7. Windows 11 Domain Join</div>
+        <div class="next-item">8. DNS & Troubleshooting</div>
+        <div class="next-item">9. Future Automation</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 1 -->
+  <section class="section" style="background:var(--bg)">
+    <div class="section-inner">
+      <div class="doc-step">
+        <h3><span class="step-num">1</span> VMware Lab Setup</h3>
+        <p>Created the virtual environment using VMware Workstation. Set up a NAT network and an isolated lab environment before installing any server OS.</p>
+        <div class="img-grid">
+          <img src="../images/AD Setup/a.png" alt="VMware setup">
+          <img src="../images/AD Setup/b.png" alt="VMware setup">
+          <img src="../images/AD Setup/c.png" alt="VMware setup">
+        </div>
+        <pre>- Installed VMware Workstation
+- Created NAT network
+- Prepared isolated lab environment</pre>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- STEP 2 -->
+      <div class="doc-step">
+        <h3><span class="step-num">2</span> Windows Server Installation</h3>
+        <p>Installed Windows Server 2022 on the virtual machine. Mounted the ISO, completed the setup wizard, set an admin password, and installed VMware Tools for better performance.</p>
+        <div class="img-grid">
+          <img src="../images/AD Setup/e.png" alt="Server install">
+          <img src="../images/AD Setup/f.png" alt="Server install">
+          <img src="../images/AD Setup/g.png" alt="Server install">
+          <img src="../images/AD Setup/d.png" alt="Server install">
+        </div>
+        <pre>- Mounted ISO
+- Installed Windows Server 2022
+- Set admin password
+- Installed VMware Tools</pre>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- STEP 3 -->
+      <div class="doc-step">
+        <h3><span class="step-num">3</span> Domain Controller Creation</h3>
+        <p>Prepared the server to become a Domain Controller. Renamed the server to <strong>SYD-DC-01</strong> and verified the system configuration before promoting.</p>
+        <div class="img-grid">
+          <img src="../images/AD Setup/h.png" alt="DC setup">
+          <img src="../images/AD Setup/i.png" alt="DC setup">
+          <img src="../images/AD Setup/j.png" alt="DC setup">
+          <img src="../images/AD Setup/k.png" alt="DC setup">
+          <img src="../images/AD Setup/l.png" alt="DC setup">
+          <img src="../images/AD Setup/m.png" alt="DC setup">
+          <img src="../images/AD Setup/n.png" alt="DC setup">
+          <img src="../images/AD Setup/o.png" alt="DC setup">
+          <img src="../images/AD Setup/p.png" alt="DC setup">
+        </div>
+        <pre>- Renamed server to SYD-DC-01
+- Verified system configuration</pre>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- STEP 4 -->
+      <div class="doc-step">
+        <h3><span class="step-num">4</span> Static IP Configuration</h3>
+        <p>Configured a static IP address so the server has a consistent address on the network — essential for a Domain Controller that other machines will rely on for DNS.</p>
+        <pre>- Set IP manually
+- Subnet: 255.255.255.0
+- DNS: 127.0.0.1 (pointing to itself)</pre>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- STEP 5 -->
+      <div class="doc-step">
+        <h3><span class="step-num">5</span> Active Directory Installation</h3>
+        <p>Installed the AD DS (Active Directory Domain Services) role via Server Manager. DNS was installed automatically as a dependency.</p>
+        <div class="img-grid">
+          <img src="../images/AD Setup/q.png" alt="AD install">
+          <img src="../images/AD Setup/r.png" alt="AD install">
+          <img src="../images/AD Setup/s.png" alt="AD install">
+          <img src="../images/AD Setup/t.png" alt="AD install">
+          <img src="../images/AD Setup/u.png" alt="AD install">
+          <img src="../images/AD Setup/v.png" alt="AD install">
+          <img src="../images/AD Setup/w.png" alt="AD install">
+          <img src="../images/AD Setup/x.png" alt="AD install">
+          <img src="../images/AD Setup/y.png" alt="AD install">
+        </div>
+        <pre>- Added AD DS role via Server Manager
+- DNS installed automatically as a dependency</pre>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- STEP 6 -->
+      <div class="doc-step">
+        <h3><span class="step-num">6</span> Domain Promotion</h3>
+        <p>Promoted the server to Domain Controller by creating a new Active Directory forest. After promotion, the server restarted and the domain was active.</p>
+        <pre>- Created new forest
+- Domain name: syd-lab.local
+- Restart completed successfully</pre>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- STEP 7 -->
+      <div class="doc-step">
+        <h3><span class="step-num">7</span> Windows 11 Domain Join</h3>
+        <p>Joined a Windows 11 client machine to the <strong>syd-lab.local</strong> domain. Logged in with domain credentials to confirm the join was successful.</p>
+        <pre>- Opened System Settings → Domain/Workgroup
+- Joined domain: syd-lab.local
+- Logged in with domain credentials successfully</pre>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- STEP 8 -->
+      <div class="doc-step">
+        <h3><span class="step-num">8</span> DNS & Troubleshooting</h3>
+        <p>Encountered DNS resolution issues during the domain join process. Fixed by correcting the DNS server settings on the client to point to the Domain Controller's IP instead of the router.</p>
+        <pre>- Fixed nslookup failure on client
+- Corrected DNS server to point at DC IP
+- Verified domain resolution with nslookup syd-lab.local</pre>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- STEP 9 -->
+      <div class="doc-step">
+        <h3><span class="step-num">9</span> Future Automation</h3>
+        <p>Next phase is automating repetitive AD tasks using PowerShell and Group Policy Objects — removing the need to create users or apply settings manually.</p>
+        <pre>- Bulk user creation scripts via PowerShell
+- Automated AD provisioning workflows
+- GPO deployment for security policies</pre>
+      </div>
+
+      <div class="divider"></div>
+      <a href="documentation.html" class="btn btn-ghost">← Back to Documentation</a>
+    </div>
+  </section>
+</main>
+
+<footer>© 2026 Matthew Mahasay — <a href="../index.html">Back to Home</a></footer>
+
+</body>
+</html>

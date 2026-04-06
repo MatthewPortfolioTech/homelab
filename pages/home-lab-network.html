@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home Lab Network — Matthew Mahasay</title>
+<link rel="stylesheet" href="../styles/theme.css">
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-logo">MM</a>
+  <ul class="nav-links">
+    <li><a href="../index.html#about">About</a></li>
+    <li><a href="../index.html#projects">Projects</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<main>
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span>/</span>
+        <a href="Networking.html">Networking Lab</a>
+        <span>/</span>
+        <span>Home Lab Network</span>
+      </div>
+      <div class="page-label">// lab documentation — in progress</div>
+      <h1>Physical Home Lab Network</h1>
+      <p>A small lab environment using real managed switches to test network topology, PoE devices, and prepare for firewall integration.</p>
+    </div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <section class="section" style="background:var(--bg2)">
+    <div class="section-inner">
+      <div class="section-label">// overview</div>
+      <h2>Project Overview</h2>
+      <p>This project documents a physical home lab built with real networking hardware. The goal is to understand how switches, routers, and endpoints interact in a small network environment — and to prepare for firewall and VLAN segmentation testing.</p>
+      <p>Unlike simulation tools, this lab uses <strong>real managed switches</strong> with actual traffic flowing between devices, giving hands-on experience with hardware configuration and troubleshooting.</p>
+    </div>
+  </section>
+
+  <!-- HARDWARE -->
+  <section class="section" style="background:var(--bg)">
+    <div class="section-inner">
+      <div class="section-label">// hardware</div>
+      <h2>Hardware Used</h2>
+      <div class="hw-list">
+        <div class="hw-item">
+          <div class="hw-icon">🔌</div>
+          <div>
+            <div class="hw-name">Ubiquiti UniFi USW Flex Mini</div>
+            <div class="hw-desc">Desktop managed switch for network expansion and segmentation</div>
+          </div>
+        </div>
+        <div class="hw-item">
+          <div class="hw-icon">⚡</div>
+          <div>
+            <div class="hw-name">TP-Link LS109P 8-Port PoE+ Switch</div>
+            <div class="hw-desc">PoE switch for IP cameras and other powered devices</div>
+          </div>
+        </div>
+        <div class="hw-item">
+          <div class="hw-icon">🌐</div>
+          <div>
+            <div class="hw-name">NBN Modem + Home Router</div>
+            <div class="hw-desc">Internet connection source and internal network gateway</div>
+          </div>
+        </div>
+        <div class="hw-item">
+          <div class="hw-icon">💻</div>
+          <div>
+            <div class="hw-name">Desktop PC</div>
+            <div class="hw-desc">Connected for connectivity testing and lab management</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOPOLOGY -->
+  <section class="section" style="background:var(--bg2)">
+    <div class="section-inner">
+      <div class="section-label">// topology</div>
+      <h2>Network Topology</h2>
+      <div class="topology-box">
+        <img src="../images/network-topology.png" alt="Home Lab Network Topology">
+        <p>The NBN modem connects to the home router, which links to the Ubiquiti USW Flex Mini switch. The TP-Link PoE switch is connected to the Flex Mini, with the PC connecting through the TP-Link switch for testing. Future expansion includes PoE devices and a dedicated firewall.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEPS TAKEN -->
+  <section class="section" style="background:var(--bg)">
+    <div class="section-inner">
+      <div class="section-label">// steps taken</div>
+      <h2>Setup Process</h2>
+      <div class="next-steps">
+        <div class="next-item">Connected NBN modem to the home router</div>
+        <div class="next-item">Connected Ubiquiti USW Flex Mini switch to the router</div>
+        <div class="next-item">Connected TP-Link LS109P PoE switch to the Flex Mini</div>
+        <div class="next-item">Connected PC to the TP-Link switch to verify connectivity</div>
+        <div class="next-item">Verified internet access and internal network communication</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OBSERVATIONS -->
+  <section class="section" style="background:var(--bg2)">
+    <div class="section-inner">
+      <div class="section-label">// observations</div>
+      <h2>Current Status</h2>
+      <div class="next-steps">
+        <div class="next-item">Both switches powered on and active with no config errors</div>
+        <div class="next-item">PC can access internet and local devices without issue</div>
+        <div class="next-item">PoE devices not yet connected — next phase</div>
+        <div class="next-item">Network is stable and suitable for lab experiments</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEXT STEPS -->
+  <section class="section" style="background:var(--bg)">
+    <div class="section-inner">
+      <div class="section-label">// what's next</div>
+      <h2>Next Steps</h2>
+      <div class="next-steps">
+        <div class="next-item">Test PoE devices — IP cameras or access points</div>
+        <div class="next-item">Integrate a firewall for traffic control and security testing</div>
+        <div class="next-item">Experiment with VLANs to segment traffic between devices</div>
+        <div class="next-item">Document all configuration changes for reproducibility</div>
+      </div>
+      <div style="margin-top:2rem">
+        <a href="Networking.html" class="btn btn-ghost">← Back to Networking Lab</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>© 2026 Matthew Mahasay — <a href="../index.html">Back to Home</a></footer>
+
+</body>
+</html>

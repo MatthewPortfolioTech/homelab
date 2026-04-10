@@ -27,21 +27,21 @@
         <span>/</span>
         <span>Rocky Linux Lab</span>
       </div>
-      <div class="page-label">// lab project — just getting started</div>
-      <h1>Rocky Linux Lab</h1>
-      <p>Learning enterprise Linux administration from the ground up — using Rocky Linux in a virtualised environment to explore the CLI, server configuration, and Linux fundamentals.</p>
+      <div class="page-label">// lab documentation — in progress</div>
+      <h1>Rocky Linux Server Setup & Remote Administration</h1>
+      <p>Deployed and configured a minimal Linux server using Rocky Linux 10.1 — including networking, web hosting, remote access via SSH, and real-world troubleshooting.</p>
     </div>
   </div>
 
-  <!-- WHAT IS ROCKY LINUX -->
+  <!-- OVERVIEW -->
   <section class="section" style="background:var(--bg2)">
     <div class="section-inner">
-      <div class="section-label">// about this lab</div>
+      <div class="section-label">// overview</div>
       <h2>Why Rocky Linux?</h2>
-      <p>Rocky Linux is a community-driven enterprise Linux distribution, designed as a downstream rebuild of Red Hat Enterprise Linux (RHEL). It's widely used in enterprise server environments, making it a practical choice for anyone looking to build skills in Linux administration.</p>
-      <p>This lab is the starting point — getting comfortable with the OS, the CLI, and how Linux fits into an enterprise infrastructure alongside Windows Server and Active Directory.</p>
+      <p>Rocky Linux is a community-driven enterprise Linux distribution — a downstream rebuild of <strong>Red Hat Enterprise Linux (RHEL)</strong>. It's widely used in enterprise server environments, making it a practical choice for building real Linux administration skills.</p>
+      <p>This lab uses a <strong>Minimal Install</strong> (no GUI) to simulate how real enterprise servers are run — CLI-only, lean, and secure. Everything is done through the terminal.</p>
       <div style="margin-top:1.5rem">
-        <img src="../images/Linux/Rocky_Linux.png" alt="Rocky Linux" style="height:60px;width:auto;display:block">
+        <img src="../images/Linux/Rocky_Linux.png" alt="Rocky Linux" style="height:55px;width:auto;display:block">
       </div>
     </div>
   </section>
@@ -50,44 +50,211 @@
   <section class="section" style="background:var(--bg)">
     <div class="section-inner">
       <div class="section-label">// skills & tools</div>
-      <h2>Technologies Being Learned</h2>
+      <h2>Technologies Used</h2>
       <div class="skills-wrap">
-        <span class="skill-chip">Rocky Linux</span>
-        <span class="skill-chip">Linux CLI</span>
+        <span class="skill-chip">Rocky Linux 10.1</span>
         <span class="skill-chip">VMware Workstation</span>
-        <span class="skill-chip">User & Permission Management</span>
-        <span class="skill-chip">File System Navigation</span>
-        <span class="skill-chip">Basic Networking (Linux)</span>
+        <span class="skill-chip">Linux CLI</span>
+        <span class="skill-chip">SSH</span>
+        <span class="skill-chip">Apache HTTP Server</span>
+        <span class="skill-chip">Cockpit</span>
+        <span class="skill-chip">firewall-cmd</span>
+        <span class="skill-chip">dnf package manager</span>
+        <span class="skill-chip">nmcli / NetworkManager</span>
+        <span class="skill-chip">systemctl</span>
       </div>
     </div>
   </section>
 
-  <!-- CURRENT PROGRESS -->
+  <!-- INSTALLATION -->
   <section class="section" style="background:var(--bg2)">
     <div class="section-inner">
-      <div class="section-label">// current progress</div>
-      <h2>Just Getting Started</h2>
-      <p>This lab is in its early stages. The focus right now is on getting Rocky Linux installed and running in VMware, and building familiarity with the Linux environment.</p>
-      <div class="next-steps">
-        <div class="next-item">Installed Rocky Linux in VMware Workstation</div>
-        <div class="next-item">Exploring the CLI and basic Linux commands</div>
-        <div class="next-item">Learning file system structure and navigation</div>
+      <div class="section-label">// step 1 — installation</div>
+      <h2>VMware Setup & Rocky Linux Installation</h2>
+
+      <div class="doc-step">
+        <h3><span class="step-num">1</span> Language & Installation Summary</h3>
+        <p>Launched the Rocky Linux 10.1 installer inside VMware Workstation. Selected <strong>English (United States)</strong> as the installation language, then reviewed the Installation Summary screen — confirming keyboard layout, software selection, installation destination, and network settings before beginning.</p>
+        <div class="img-grid">
+          <img src="../images/Linux/Linux_Linux.png" alt="Rocky Linux 10.1 — language selection screen">
+          <img src="../images/Linux/Configure_settings.png" alt="Installation summary — reviewing configuration">
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="doc-step">
+        <h3><span class="step-num">2</span> Select Installation Disk</h3>
+        <p>Selected the <strong>VMware Virtual NVMe Disk (40 GiB)</strong> as the installation destination. Chose <strong>automatic partitioning</strong> to keep the setup clean and appropriate for a lab environment.</p>
+        <img src="../images/Linux/Select_VMware_Disk.png" alt="Installation destination — selecting VMware virtual disk" class="doc-img">
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="doc-step">
+        <h3><span class="step-num">3</span> Installation in Progress</h3>
+        <p>Started the installation — Rocky Linux packages were downloaded and written to the virtual disk. Chose <strong>Minimal Install</strong> intentionally to keep the server lean and CLI-only, mirroring how real headless enterprise servers are deployed.</p>
+        <div class="img-grid">
+          <img src="../images/Linux/File_installing.png" alt="Installation in progress — packages being installed">
+          <img src="../images/Linux/Installation_completed.png" alt="Installation complete — ready to reboot">
+        </div>
+        <pre>Installation type: Minimal Install (no GUI)
+Purpose: Simulates real enterprise headless servers
+Outcome: Fully CLI-based environment for administration</pre>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="doc-step">
+        <h3><span class="step-num">4</span> First Boot — System Initialisation</h3>
+        <p>After rebooting, watched the system initialise all services via <strong>systemd</strong>. Useful for understanding which services start automatically — including SSH, networking targets, and core system processes.</p>
+        <img src="../images/Linux/Linux_Setup.png" alt="First boot — systemd service initialisation output" class="doc-img">
       </div>
     </div>
   </section>
 
-  <!-- FUTURE PLANS -->
+  <!-- CONFIGURATION -->
   <section class="section" style="background:var(--bg)">
     <div class="section-inner">
-      <div class="section-label">// what's next</div>
-      <h2>Planned Learning</h2>
-      <p>As the lab progresses, the goal is to build practical Linux administration skills that complement the Windows Server and networking work already underway.</p>
+      <div class="section-label">// step 2 — configuration</div>
+      <h2>Server Configuration & Administration</h2>
+
+      <div class="doc-step">
+        <h3><span class="step-num">5</span> Networking Setup — VMware Bridged Mode</h3>
+        <p>Configured VM networking using <strong>Bridged Adapter</strong> so the server received a LAN IP address reachable from the host machine. Initially had no internet connectivity — the VM only showed <code>127.0.0.1</code> with no usable IP.</p>
+        <pre>ip a                          # Inspect network interfaces and assigned IPs
+hostname -I                   # Quickly retrieve the usable LAN IP
+nmcli device status           # View connection status for all interfaces
+nmcli device connect &lt;iface&gt;  # Activate a network interface</pre>
+        <p><strong>Resolution:</strong> Reconfigured VMware to Bridged mode and bound VMnet0 to the correct WiFi adapter. Server then received a valid <code>192.168.x.x</code> IP and was reachable from the host.</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="doc-step">
+        <h3><span class="step-num">6</span> System Update & Essential Tools</h3>
+        <p>Updated all installed packages to apply the latest security patches and ensure stability. Then installed essential CLI tools for file editing, downloading, and version control.</p>
+        <pre>sudo dnf update -y
+sudo dnf install -y vim nano git curl wget bash-completion</pre>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="doc-step">
+        <h3><span class="step-num">7</span> Web Server Deployment — Apache</h3>
+        <p>Installed and enabled <strong>Apache HTTP Server (httpd)</strong>, then created a test HTML page to confirm the server was accessible from the host machine's browser over the local network.</p>
+        <pre>sudo dnf install -y httpd
+sudo systemctl enable --now httpd</pre>
+        <p>Created a test page at <code>/var/www/html/index.html</code> and opened it in a browser from the Windows host to confirm it was being served correctly.</p>
+        <div class="img-grid">
+          <img src="../images/Linux/First_HTML_in_Rocky.png" alt="First HTML page served from Rocky Linux — Brave browser">
+          <img src="../images/Linux/helloworld.png" alt="Hello From Rocky Linux — confirmed in browser">
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="doc-step">
+        <h3><span class="step-num">8</span> Firewall Configuration</h3>
+        <p>Opened the firewall to allow inbound HTTP traffic so the Apache web server was reachable from other machines on the network.</p>
+        <pre>sudo firewall-cmd --add-service=http --permanent
+sudo firewall-cmd --reload</pre>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="doc-step">
+        <h3><span class="step-num">9</span> Cockpit — Web-Based Server Management</h3>
+        <p>Installed <strong>Cockpit</strong>, a browser-based management interface for monitoring system health, managing services, and viewing logs — without needing to memorise every CLI command.</p>
+        <pre>sudo dnf install -y cockpit
+sudo systemctl enable --now cockpit</pre>
+        <p>Accessible at <code>https://192.168.x.x:9090</code> from the host browser after enabling the service.</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="doc-step">
+        <h3><span class="step-num">10</span> Remote Access — SSH from Windows</h3>
+        <p>Installed and enabled the <strong>OpenSSH server</strong>, then connected remotely from a Windows machine via PowerShell. This is how enterprise Linux servers are managed in the real world — no GUI, just SSH.</p>
+        <pre>sudo dnf install -y openssh-server
+sudo systemctl enable --now sshd
+
+# From Windows PowerShell:
+ssh home.lab@192.168.x.x</pre>
+        <img src="../images/Linux/SSH_from_Main_window.png" alt="SSH connection from Windows PowerShell to Rocky Linux server" class="doc-img">
+      </div>
+    </div>
+  </section>
+
+  <!-- TROUBLESHOOTING -->
+  <section class="section" style="background:var(--bg2)">
+    <div class="section-inner">
+      <div class="section-label">// troubleshooting</div>
+      <h2>Challenges & How I Fixed Them</h2>
+      <p>Real issues encountered during setup — and how they were diagnosed and resolved.</p>
+
+      <div class="doc-step">
+        <h3><span class="step-num">!</span> Issue 1 — No Internet Connection</h3>
+        <p><strong>Problem:</strong> <code>dnf update</code> failed due to no network connectivity. <code>ip a</code> showed no valid IP — only the loopback <code>127.0.0.1</code>.</p>
+        <p><strong>Fix:</strong> Reconfigured VMware from NAT to <strong>Bridged mode</strong>, bound VMnet0 to the correct WiFi adapter, then activated the interface with <code>nmcli device connect &lt;interface&gt;</code>.</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="doc-step">
+        <h3><span class="step-num">!</span> Issue 2 — Confused 127.0.0.1 with the Server IP</h3>
+        <p><strong>Problem:</strong> Initially mistook <code>127.0.0.1</code> (loopback/localhost) as the server's accessible IP address.</p>
+        <p><strong>Fix:</strong> Learned to use <code>hostname -I</code> to retrieve the correct LAN IP (<code>192.168.x.x</code>) that external machines can reach.</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="doc-step">
+        <h3><span class="step-num">!</span> Issue 3 — Missing Commands on Minimal Install</h3>
+        <p><strong>Problem:</strong> Commands like <code>dhclient</code> were not found — they aren't included in a Minimal Install.</p>
+        <p><strong>Fix:</strong> Used <code>nmcli</code> as the alternative for network management, and installed any missing tools with <code>sudo dnf install &lt;package&gt;</code>.</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="doc-step">
+        <h3><span class="step-num">!</span> Issue 4 — Web Server Not Reachable from Host</h3>
+        <p><strong>Problem:</strong> Browser on the host machine couldn't reach the Apache server even after installation.</p>
+        <p><strong>Fix:</strong> Verified Apache was running with <code>systemctl status httpd</code>, then opened the HTTP port through the firewall and confirmed the correct server IP was being used.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- KEY SKILLS -->
+  <section class="section" style="background:var(--bg)">
+    <div class="section-inner">
+      <div class="section-label">// key outcomes</div>
+      <h2>Skills Demonstrated</h2>
       <div class="next-steps">
-        <div class="next-item">User, group, and permission management</div>
-        <div class="next-item">Setting up and configuring basic Linux services (SSH, web server)</div>
-        <div class="next-item">Networking configuration from the Linux CLI</div>
-        <div class="next-item">Integrating Rocky Linux into the existing lab environment alongside Windows Server</div>
-        <div class="next-item">Shell scripting for basic automation tasks</div>
+        <div class="next-item">Linux system administration on an enterprise-grade RHEL-based OS</div>
+        <div class="next-item">Networking configuration and IP troubleshooting from the CLI</div>
+        <div class="next-item">Virtualisation with VMware — bridged networking, disk setup, minimal install</div>
+        <div class="next-item">Service management with systemctl — enable, start, status, troubleshoot</div>
+        <div class="next-item">Package management with dnf — install, update, resolve missing tools</div>
+        <div class="next-item">Firewall configuration with firewall-cmd</div>
+        <div class="next-item">Remote server access via SSH from a Windows machine</div>
+        <div class="next-item">Web server deployment — Apache serving content over a local network</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEXT STEPS -->
+  <section class="section" style="background:var(--bg2)">
+    <div class="section-inner">
+      <div class="section-label">// what's next</div>
+      <h2>Planned Next Steps</h2>
+      <div class="next-steps">
+        <div class="next-item">Set up user accounts, groups, and file permissions</div>
+        <div class="next-item">Configure Samba for cross-platform file sharing with Windows machines</div>
+        <div class="next-item">Harden SSH — disable root login, switch to key-based authentication</div>
+        <div class="next-item">Explore system monitoring — journalctl, top, df, Cockpit dashboards</div>
+        <div class="next-item">Integrate Rocky Linux into the existing AD lab environment</div>
+        <div class="next-item">Write basic shell scripts to automate routine admin tasks</div>
       </div>
       <div style="margin-top:2rem">
         <a href="Enterprise Infrastructure.html" class="btn btn-ghost">← Back to Enterprise Infrastructure</a>

@@ -3,8 +3,113 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Active Directory Lab Documentation — Matthew Mahasay</title>
-<link rel="stylesheet" href="../styles/theme.css">
+<title>Active Directory Lab — Matthew Mahasay</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0c10;--bg2:#111318;--bg3:#181c24;--accent:#00d4a0;--accent2:#0ea5e9;--text:#f0f2f6;--muted:#8892a4;--border:#1e2330;--card:#13161e}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6;overflow-x:hidden;display:flex;flex-direction:column;min-height:100vh}
+main{flex:1}
+
+nav{position:sticky;top:0;z-index:100;background:rgba(10,12,16,0.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:60px}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;letter-spacing:0.05em;color:var(--accent);text-decoration:none}
+.nav-links{display:flex;gap:1.5rem;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:0.85rem;transition:color 0.2s}
+.nav-links a:hover{color:var(--text)}
+
+.page-hero{padding:5rem 2rem 3rem;border-bottom:1px solid var(--border);background:var(--bg);position:relative;overflow:hidden}
+.page-hero::before{content:'';position:absolute;top:-150px;right:-150px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,212,160,0.05) 0%,transparent 70%);pointer-events:none}
+.page-hero-inner{max-width:900px;margin:0 auto}
+.breadcrumb{display:flex;align-items:center;gap:0.5rem;margin-bottom:1.5rem;font-size:0.8rem;font-family:'DM Mono',monospace}
+.breadcrumb a{color:var(--accent);text-decoration:none}
+.breadcrumb a:hover{text-decoration:underline}
+.breadcrumb span{color:var(--muted)}
+.page-label{font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--accent);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.75rem}
+.page-hero h1{font-family:'Syne',sans-serif;font-size:clamp(2rem,4vw,3rem);font-weight:800;line-height:1.1;margin-bottom:1rem}
+.page-hero p{color:var(--muted);max-width:650px;font-size:1rem;line-height:1.8}
+
+.section{padding:4rem 2rem;border-bottom:1px solid var(--border)}
+.section-inner{max-width:900px;margin:0 auto}
+.section-label{font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--accent);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.6rem}
+.section h2{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:700;margin-bottom:1.25rem}
+
+.skills-wrap{display:flex;flex-wrap:wrap;gap:0.6rem}
+.skill-chip{background:var(--card);border:1px solid var(--border);border-radius:0.4rem;padding:0.5rem 1rem;font-size:0.8rem;color:var(--text);font-family:'DM Mono',monospace;transition:border-color 0.2s}
+.skill-chip:hover{border-color:rgba(0,212,160,0.3)}
+
+/* TOP-LEVEL ACCORDION (Lab entries) */
+.acc{display:flex;flex-direction:column;gap:0.75rem}
+.acc-item{background:var(--card);border:1px solid var(--border);border-radius:0.75rem;overflow:hidden;transition:border-color 0.2s}
+.acc-item.open{border-color:rgba(0,212,160,0.3)}
+.acc-header{display:flex;align-items:center;gap:0.85rem;padding:1.1rem 1.25rem;cursor:pointer;user-select:none}
+.acc-header:hover .acc-title{color:var(--accent)}
+.acc-num{width:30px;height:30px;border-radius:50%;background:rgba(0,212,160,0.1);border:1px solid rgba(0,212,160,0.25);color:var(--accent);font-family:'DM Mono',monospace;font-size:0.72rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:500}
+.acc-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--text);flex:1;transition:color 0.2s}
+.acc-badge{font-size:0.62rem;padding:0.22rem 0.6rem;border-radius:2rem;font-family:'DM Mono',monospace;white-space:nowrap;flex-shrink:0}
+.acc-badge.done{background:rgba(0,212,160,0.1);color:var(--accent);border:1px solid rgba(0,212,160,0.2)}
+.acc-badge.soon{background:rgba(14,165,233,0.08);color:var(--accent2);border:1px solid rgba(14,165,233,0.15)}
+.acc-arrow{width:16px;height:16px;color:var(--muted);transition:transform 0.25s;flex-shrink:0}
+.acc-item.open .acc-arrow{transform:rotate(180deg)}
+.acc-body{max-height:0;overflow:hidden;transition:max-height 0.4s ease}
+.acc-item.open .acc-body{max-height:9000px}
+.acc-inner{padding:1.5rem 1.25rem;border-top:1px solid var(--border)}
+
+/* INNER STEP ACCORDIONS */
+.steps-acc{display:flex;flex-direction:column;gap:0.5rem;margin-top:0.5rem}
+.step-item{background:var(--bg2);border:1px solid var(--border);border-radius:0.6rem;overflow:hidden;transition:border-color 0.2s}
+.step-item.open{border-color:rgba(0,212,160,0.2)}
+.step-header{display:flex;align-items:center;gap:0.75rem;padding:0.85rem 1rem;cursor:pointer;user-select:none}
+.step-header:hover .step-title{color:var(--accent)}
+.step-num{width:24px;height:24px;border-radius:50%;background:rgba(0,212,160,0.08);border:1px solid rgba(0,212,160,0.2);color:var(--accent);font-family:'DM Mono',monospace;font-size:0.68rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-num.warn{background:rgba(239,159,39,0.08);border-color:rgba(239,159,39,0.25);color:#ef9f27}
+.step-title{font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);flex:1;transition:color 0.2s}
+.step-arrow{width:14px;height:14px;color:var(--muted);transition:transform 0.2s;flex-shrink:0}
+.step-item.open .step-arrow{transform:rotate(180deg)}
+.step-body{max-height:0;overflow:hidden;transition:max-height 0.3s ease}
+.step-item.open .step-body{max-height:3000px}
+.step-inner{padding:1rem;border-top:1px solid var(--border)}
+.step-inner p{color:var(--muted);font-size:0.85rem;line-height:1.8;margin-bottom:0.75rem}
+.step-inner p:last-child{margin-bottom:0}
+.step-inner p strong{color:var(--text);font-weight:500}
+.step-inner pre{background:var(--bg);border:1px solid var(--border);border-radius:0.4rem;padding:0.75rem 1rem;font-family:'DM Mono',monospace;font-size:0.76rem;color:var(--accent);line-height:1.8;margin:0.75rem 0;overflow-x:auto;white-space:pre}
+.step-img-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.6rem;margin:0.75rem 0}
+.step-img-grid img{width:100%;height:170px;object-fit:cover;border-radius:0.4rem;border:1px solid var(--border);display:block}
+.fix-box{display:flex;gap:0.75rem;align-items:flex-start;padding:0.75rem 1rem;background:var(--bg);border-left:2px solid #ef9f27;border-radius:0 0.4rem 0.4rem 0;margin:0.75rem 0}
+.fix-label{font-size:0.65rem;color:#ef9f27;font-family:'DM Mono',monospace;font-weight:500;flex-shrink:0;margin-top:3px;letter-spacing:0.08em;text-transform:uppercase}
+.fix-text{font-size:0.82rem;color:var(--muted);line-height:1.65}
+.fix-text code{font-family:'DM Mono',monospace;color:var(--accent);font-size:0.76rem}
+
+/* CODE BLOCK for automation section */
+.code-block{background:var(--bg);border:1px solid var(--border);border-radius:0.5rem;overflow:hidden;margin:1rem 0}
+.code-block-header{display:flex;align-items:center;justify-content:space-between;padding:0.6rem 1rem;border-bottom:1px solid var(--border);background:var(--bg3)}
+.code-block-lang{font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--muted);letter-spacing:0.08em}
+.code-block-name{font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--accent2)}
+.code-block pre{padding:1rem;font-family:'DM Mono',monospace;font-size:0.75rem;color:#c8d8e8;line-height:1.85;overflow-x:auto;white-space:pre;margin:0}
+.code-kw{color:#00d4a0}
+.code-cm{color:#4a5568;font-style:italic}
+.code-str{color:#f6c90e}
+.code-var{color:#0ea5e9}
+.code-fn{color:#f0a0d0}
+
+.acc-inner p{color:var(--muted);font-size:0.88rem;line-height:1.8;margin-bottom:0.85rem}
+.acc-inner p strong{color:var(--text);font-weight:500}
+.acc-inner h3{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--text);margin:1.25rem 0 0.5rem}
+.acc-inner ul{color:var(--muted);font-size:0.85rem;line-height:1.9;padding-left:1.25rem}
+.acc-inner ul li{margin-bottom:0.2rem}
+.acc-sub-label{font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--accent2);letter-spacing:0.1em;text-transform:uppercase;margin:1.25rem 0 0.5rem;display:block}
+
+.next-steps{display:flex;flex-direction:column;gap:0.5rem}
+.next-item{display:flex;align-items:center;gap:0.75rem;padding:0.6rem 0;border-bottom:1px solid var(--border);font-size:0.88rem;color:var(--muted)}
+.next-item:last-child{border-bottom:none}
+.next-item::before{content:'→';color:var(--accent);font-family:'DM Mono',monospace;flex-shrink:0}
+
+.btn{display:inline-flex;align-items:center;gap:0.4rem;padding:0.6rem 1.25rem;border-radius:0.4rem;font-size:0.85rem;font-weight:500;text-decoration:none;transition:all 0.2s;font-family:'DM Sans',sans-serif;border:1px solid var(--border);color:var(--text);background:transparent}
+.btn:hover{border-color:var(--muted)}
+
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;font-size:0.8rem;color:var(--muted);font-family:'DM Mono',monospace}
+footer a{color:var(--accent);text-decoration:none}
+</style>
 </head>
 <body>
 
@@ -27,169 +132,463 @@
         <span>/</span>
         <span>Active Directory Lab</span>
       </div>
-      <div class="page-label">// lab documentation</div>
+      <div class="page-label">// lab documentation — in progress</div>
       <h1>Active Directory Home Lab</h1>
-      <p>Full setup of a Windows Server 2022 Domain Controller in VMware — covering AD DS installation, DNS, static IP, domain promotion, client join, and troubleshooting.</p>
+      <p>Building and administering an Active Directory environment from scratch — domain controller setup, user management, and custom automation tooling built with PowerShell and Python. Expand each entry to explore the steps, screenshots, and code.</p>
     </div>
   </div>
 
-  <!-- CONTENTS -->
+  <!-- SKILLS -->
   <section class="section" style="background:var(--bg2)">
     <div class="section-inner">
-      <div class="section-label">// contents</div>
-      <h2>What's Covered</h2>
-      <div class="next-steps">
-        <div class="next-item">1. VMware Lab Setup</div>
-        <div class="next-item">2. Windows Server Installation</div>
-        <div class="next-item">3. Domain Controller Creation</div>
-        <div class="next-item">4. Static IP Configuration</div>
-        <div class="next-item">5. Active Directory Installation</div>
-        <div class="next-item">6. Domain Promotion</div>
-        <div class="next-item">7. Windows 11 Domain Join</div>
-        <div class="next-item">8. DNS & Troubleshooting</div>
-        <div class="next-item">9. Future Automation</div>
+      <div class="section-label">// skills & tools</div>
+      <h2>Technologies Used</h2>
+      <div class="skills-wrap">
+        <span class="skill-chip">Active Directory</span>
+        <span class="skill-chip">Windows Server 2022</span>
+        <span class="skill-chip">VMware Workstation</span>
+        <span class="skill-chip">DNS & DHCP</span>
+        <span class="skill-chip">Group Policy (GPO)</span>
+        <span class="skill-chip">PowerShell</span>
+        <span class="skill-chip">Python / Flask</span>
+        <span class="skill-chip">HTML / CSS / JS</span>
+        <span class="skill-chip">Windows Firewall</span>
+        <span class="skill-chip">Scheduled Tasks</span>
       </div>
     </div>
   </section>
 
-  <!-- STEP 1 -->
+  <!-- MAIN ACCORDION -->
   <section class="section" style="background:var(--bg)">
     <div class="section-inner">
-      <div class="doc-step">
-        <h3><span class="step-num">1</span> VMware Lab Setup</h3>
-        <p>Created the virtual environment using VMware Workstation. Set up a NAT network and an isolated lab environment before installing any server OS.</p>
-        <div class="img-grid">
-          <img src="../images/AD Setup/a.png" alt="VMware setup">
-          <img src="../images/AD Setup/b.png" alt="VMware setup">
-          <img src="../images/AD Setup/c.png" alt="VMware setup">
-        </div>
-        <pre>- Installed VMware Workstation
+      <div class="section-label">// lab entries</div>
+      <h2>Lab Documentation</h2>
+      <p style="color:var(--muted);font-size:0.9rem;line-height:1.7;margin-bottom:1.5rem">Each entry below covers a distinct phase of the lab. Click to expand and read through the steps, screenshots, and any troubleshooting involved.</p>
+
+      <div class="acc" id="accordion">
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- ENTRY 1 — HOME LAB SETUP & DOMAIN CONTROLLER       -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <div class="acc-item open">
+          <div class="acc-header" onclick="toggleAcc(this)">
+            <div class="acc-num">1</div>
+            <div class="acc-title">Home Lab Setup & Domain Controller Build</div>
+            <span class="acc-badge done">Completed</span>
+            <svg class="acc-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+          </div>
+          <div class="acc-body">
+            <div class="acc-inner">
+              <p>Built a full Active Directory environment from scratch inside VMware Workstation — from installing Windows Server 2022 to promoting it as a Domain Controller, joining a Windows 11 client, and troubleshooting DNS. Expand each step below.</p>
+
+              <div class="steps-acc">
+
+                <!-- Step 1 -->
+                <div class="step-item">
+                  <div class="step-header" onclick="toggleStep(this)">
+                    <div class="step-num">1</div>
+                    <div class="step-title">VMware Lab Setup</div>
+                    <svg class="step-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+                  </div>
+                  <div class="step-body">
+                    <div class="step-inner">
+                      <p>Created the virtual environment using VMware Workstation. Set up a NAT network and an isolated lab environment before installing any server OS.</p>
+                      <div class="step-img-grid">
+                        <img src="../images/AD Setup/a.png" alt="VMware setup">
+                        <img src="../images/AD Setup/b.png" alt="VMware setup">
+                        <img src="../images/AD Setup/c.png" alt="VMware setup">
+                      </div>
+                      <pre>- Installed VMware Workstation
 - Created NAT network
 - Prepared isolated lab environment</pre>
-      </div>
+                    </div>
+                  </div>
+                </div>
 
-      <div class="divider"></div>
-
-      <!-- STEP 2 -->
-      <div class="doc-step">
-        <h3><span class="step-num">2</span> Windows Server Installation</h3>
-        <p>Installed Windows Server 2022 on the virtual machine. Mounted the ISO, completed the setup wizard, set an admin password, and installed VMware Tools for better performance.</p>
-        <div class="img-grid">
-          <img src="../images/AD Setup/e.png" alt="Server install">
-          <img src="../images/AD Setup/f.png" alt="Server install">
-          <img src="../images/AD Setup/g.png" alt="Server install">
-          <img src="../images/AD Setup/d.png" alt="Server install">
-        </div>
-        <pre>- Mounted ISO
+                <!-- Step 2 -->
+                <div class="step-item">
+                  <div class="step-header" onclick="toggleStep(this)">
+                    <div class="step-num">2</div>
+                    <div class="step-title">Windows Server 2022 Installation</div>
+                    <svg class="step-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+                  </div>
+                  <div class="step-body">
+                    <div class="step-inner">
+                      <p>Installed Windows Server 2022 on the virtual machine. Mounted the ISO, completed the setup wizard, set an admin password, and installed VMware Tools for better performance.</p>
+                      <div class="step-img-grid">
+                        <img src="../images/AD Setup/e.png" alt="Server install">
+                        <img src="../images/AD Setup/f.png" alt="Server install">
+                        <img src="../images/AD Setup/g.png" alt="Server install">
+                        <img src="../images/AD Setup/d.png" alt="Server install">
+                      </div>
+                      <pre>- Mounted ISO
 - Installed Windows Server 2022
 - Set admin password
 - Installed VMware Tools</pre>
-      </div>
+                    </div>
+                  </div>
+                </div>
 
-      <div class="divider"></div>
-
-      <!-- STEP 3 -->
-      <div class="doc-step">
-        <h3><span class="step-num">3</span> Domain Controller Creation</h3>
-        <p>Prepared the server to become a Domain Controller. Renamed the server to <strong>SYD-DC-01</strong> and verified the system configuration before promoting.</p>
-        <div class="img-grid">
-          <img src="../images/AD Setup/h.png" alt="DC setup">
-          <img src="../images/AD Setup/i.png" alt="DC setup">
-          <img src="../images/AD Setup/j.png" alt="DC setup">
-          <img src="../images/AD Setup/k.png" alt="DC setup">
-          <img src="../images/AD Setup/l.png" alt="DC setup">
-          <img src="../images/AD Setup/m.png" alt="DC setup">
-          <img src="../images/AD Setup/n.png" alt="DC setup">
-          <img src="../images/AD Setup/o.png" alt="DC setup">
-          <img src="../images/AD Setup/p.png" alt="DC setup">
-        </div>
-        <pre>- Renamed server to SYD-DC-01
+                <!-- Step 3 -->
+                <div class="step-item">
+                  <div class="step-header" onclick="toggleStep(this)">
+                    <div class="step-num">3</div>
+                    <div class="step-title">Domain Controller Preparation</div>
+                    <svg class="step-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+                  </div>
+                  <div class="step-body">
+                    <div class="step-inner">
+                      <p>Prepared the server to become a Domain Controller. Renamed the server to <strong>SYD-DC-01</strong> and verified the system configuration before promoting.</p>
+                      <div class="step-img-grid">
+                        <img src="../images/AD Setup/h.png" alt="DC setup">
+                        <img src="../images/AD Setup/i.png" alt="DC setup">
+                        <img src="../images/AD Setup/j.png" alt="DC setup">
+                        <img src="../images/AD Setup/k.png" alt="DC setup">
+                        <img src="../images/AD Setup/l.png" alt="DC setup">
+                        <img src="../images/AD Setup/m.png" alt="DC setup">
+                      </div>
+                      <pre>- Renamed server to SYD-DC-01
 - Verified system configuration</pre>
-      </div>
+                    </div>
+                  </div>
+                </div>
 
-      <div class="divider"></div>
-
-      <!-- STEP 4 -->
-      <div class="doc-step">
-        <h3><span class="step-num">4</span> Static IP Configuration</h3>
-        <p>Configured a static IP address so the server has a consistent address on the network — essential for a Domain Controller that other machines will rely on for DNS.</p>
-        <pre>- Set IP manually
+                <!-- Step 4 -->
+                <div class="step-item">
+                  <div class="step-header" onclick="toggleStep(this)">
+                    <div class="step-num">4</div>
+                    <div class="step-title">Static IP Configuration</div>
+                    <svg class="step-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+                  </div>
+                  <div class="step-body">
+                    <div class="step-inner">
+                      <p>Configured a static IP address so the server has a consistent address on the network — essential for a Domain Controller that other machines rely on for DNS.</p>
+                      <pre>- Set IP manually
 - Subnet: 255.255.255.0
 - DNS: 127.0.0.1 (pointing to itself)</pre>
-      </div>
+                    </div>
+                  </div>
+                </div>
 
-      <div class="divider"></div>
-
-      <!-- STEP 5 -->
-      <div class="doc-step">
-        <h3><span class="step-num">5</span> Active Directory Installation</h3>
-        <p>Installed the AD DS (Active Directory Domain Services) role via Server Manager. DNS was installed automatically as a dependency.</p>
-        <div class="img-grid">
-          <img src="../images/AD Setup/q.png" alt="AD install">
-          <img src="../images/AD Setup/r.png" alt="AD install">
-          <img src="../images/AD Setup/s.png" alt="AD install">
-          <img src="../images/AD Setup/t.png" alt="AD install">
-          <img src="../images/AD Setup/u.png" alt="AD install">
-          <img src="../images/AD Setup/v.png" alt="AD install">
-          <img src="../images/AD Setup/w.png" alt="AD install">
-          <img src="../images/AD Setup/x.png" alt="AD install">
-          <img src="../images/AD Setup/y.png" alt="AD install">
-        </div>
-        <pre>- Added AD DS role via Server Manager
+                <!-- Step 5 -->
+                <div class="step-item">
+                  <div class="step-header" onclick="toggleStep(this)">
+                    <div class="step-num">5</div>
+                    <div class="step-title">Active Directory DS Installation</div>
+                    <svg class="step-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+                  </div>
+                  <div class="step-body">
+                    <div class="step-inner">
+                      <p>Installed the AD DS (Active Directory Domain Services) role via Server Manager. DNS was installed automatically as a dependency.</p>
+                      <div class="step-img-grid">
+                        <img src="../images/AD Setup/q.png" alt="AD install">
+                        <img src="../images/AD Setup/r.png" alt="AD install">
+                        <img src="../images/AD Setup/s.png" alt="AD install">
+                        <img src="../images/AD Setup/t.png" alt="AD install">
+                        <img src="../images/AD Setup/u.png" alt="AD install">
+                        <img src="../images/AD Setup/v.png" alt="AD install">
+                        <img src="../images/AD Setup/w.png" alt="AD install">
+                        <img src="../images/AD Setup/x.png" alt="AD install">
+                        <img src="../images/AD Setup/y.png" alt="AD install">
+                      </div>
+                      <pre>- Added AD DS role via Server Manager
 - DNS installed automatically as a dependency</pre>
-      </div>
+                    </div>
+                  </div>
+                </div>
 
-      <div class="divider"></div>
-
-      <!-- STEP 6 -->
-      <div class="doc-step">
-        <h3><span class="step-num">6</span> Domain Promotion</h3>
-        <p>Promoted the server to Domain Controller by creating a new Active Directory forest. After promotion, the server restarted and the domain was active.</p>
-        <pre>- Created new forest
-- Domain name: syd-lab.local
+                <!-- Step 6 -->
+                <div class="step-item">
+                  <div class="step-header" onclick="toggleStep(this)">
+                    <div class="step-num">6</div>
+                    <div class="step-title">Domain Promotion</div>
+                    <svg class="step-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+                  </div>
+                  <div class="step-body">
+                    <div class="step-inner">
+                      <p>Promoted the server to Domain Controller by creating a new Active Directory forest. After promotion the server restarted and the domain was active.</p>
+                      <pre>- Created new forest
+- Domain name: HomeLab.local
+- Domain Controller: SYD-DC-01
 - Restart completed successfully</pre>
-      </div>
+                    </div>
+                  </div>
+                </div>
 
-      <div class="divider"></div>
-
-      <!-- STEP 7 -->
-      <div class="doc-step">
-        <h3><span class="step-num">7</span> Windows 11 Domain Join</h3>
-        <p>Joined a Windows 11 client machine to the <strong>syd-lab.local</strong> domain. Logged in with domain credentials to confirm the join was successful.</p>
-        <pre>- Opened System Settings → Domain/Workgroup
-- Joined domain: syd-lab.local
+                <!-- Step 7 -->
+                <div class="step-item">
+                  <div class="step-header" onclick="toggleStep(this)">
+                    <div class="step-num">7</div>
+                    <div class="step-title">Windows 11 Domain Join</div>
+                    <svg class="step-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+                  </div>
+                  <div class="step-body">
+                    <div class="step-inner">
+                      <p>Joined a Windows 11 client machine to the <strong>HomeLab.local</strong> domain. Logged in with domain credentials to confirm the join was successful.</p>
+                      <pre>- Opened System Settings → Domain/Workgroup
+- Joined domain: HomeLab.local
 - Logged in with domain credentials successfully</pre>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Step 8 -->
+                <div class="step-item">
+                  <div class="step-header" onclick="toggleStep(this)">
+                    <div class="step-num warn">!</div>
+                    <div class="step-title">DNS & Troubleshooting</div>
+                    <svg class="step-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+                  </div>
+                  <div class="step-body">
+                    <div class="step-inner">
+                      <p>Encountered DNS resolution issues during the domain join process.</p>
+                      <div class="fix-box">
+                        <span class="fix-label">Fix</span>
+                        <span class="fix-text">Corrected the DNS server setting on the client to point at the Domain Controller's IP instead of the router. Verified with <code>nslookup HomeLab.local</code>.</span>
+                      </div>
+                      <pre>- Fixed nslookup failure on client
+- Corrected DNS to point at DC IP
+- Verified domain resolution</pre>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- ENTRY 2 — AD AUTOMATION PORTAL                     -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <div class="acc-item">
+          <div class="acc-header" onclick="toggleAcc(this)">
+            <div class="acc-num">2</div>
+            <div class="acc-title">AD Onboarding & Offboarding Automation Portal</div>
+            <span class="acc-badge done">Completed</span>
+            <svg class="acc-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+          </div>
+          <div class="acc-body">
+            <div class="acc-inner">
+              <p>Built a full web-based onboarding and offboarding portal for Active Directory — replacing manual user management with a browser-based interface backed by PowerShell scripts and a Python Flask API running on the Domain Controller.</p>
+              <p><strong>Environment:</strong> HomeLab.local · Domain Controller: SYD-DC-01 · April 2026</p>
+
+              <span class="acc-sub-label">// what was built</span>
+              <ul>
+                <li><strong>Onboard-User.ps1</strong> — creates a new AD user, places them in the correct OU based on department, and adds them to security groups</li>
+                <li><strong>Offboard-User.ps1</strong> — disables the account, resets the password to a random string, removes all group memberships, and logs the action</li>
+                <li><strong>app.py</strong> — Python Flask API running on the DC, acts as the bridge between the web portal and the PowerShell scripts</li>
+                <li><strong>ad-portal.html</strong> — web portal opened in any browser on the network by IT technicians, no installation required</li>
+                <li><strong>portal-log.csv</strong> — auto-generated audit log recording every onboard and offboard action with timestamp and result</li>
+              </ul>
+
+              <span class="acc-sub-label">// request flow</span>
+              <p>IT tech opens portal in browser → fills in form → browser sends data to Flask API on DC → Flask calls PowerShell script → PowerShell creates or disables the user in AD → result is shown in the portal → action is logged to CSV.</p>
+
+              <div class="steps-acc" style="margin-top:1rem">
+
+                <div class="step-item">
+                  <div class="step-header" onclick="toggleStep(this)">
+                    <div class="step-num">1</div>
+                    <div class="step-title">Install Python & Flask on the Domain Controller</div>
+                    <svg class="step-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+                  </div>
+                  <div class="step-body">
+                    <div class="step-inner">
+                      <p>Downloaded Python 3 from python.org and installed it on the Domain Controller — making sure to tick <strong>Add Python to PATH</strong> before clicking Install Now. Then installed Flask via pip.</p>
+                      <pre>python --version          # Confirmed Python 3.14.4
+pip install flask flask-cors
+pip show flask            # Confirmed Flask 3.1.3</pre>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="step-item">
+                  <div class="step-header" onclick="toggleStep(this)">
+                    <div class="step-num">2</div>
+                    <div class="step-title">Create Scripts Folder & Files</div>
+                    <svg class="step-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+                  </div>
+                  <div class="step-body">
+                    <div class="step-inner">
+                      <p>Created the Scripts folder on the Domain Controller and saved all three files inside it.</p>
+                      <pre>New-Item -ItemType Directory -Path "C:\Scripts" -Force
+# Created: app.py, Onboard-User.ps1, Offboard-User.ps1
+Get-ChildItem C:\Scripts\   # Verified all files present</pre>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="step-item">
+                  <div class="step-header" onclick="toggleStep(this)">
+                    <div class="step-num">3</div>
+                    <div class="step-title">Test Flask & Open Firewall</div>
+                    <svg class="step-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+                  </div>
+                  <div class="step-body">
+                    <div class="step-inner">
+                      <p>Started Flask manually and confirmed it was running, then opened port 5000 in Windows Firewall so client PCs on the network could reach the API.</p>
+                      <pre>cd C:\Scripts
+python app.py             # Flask confirmed listening on port 5000
+# Tested http://localhost:5000/health → success
+
+New-NetFirewallRule -DisplayName "AD Portal API" `
+  -Direction Inbound -Protocol TCP `
+  -LocalPort 5000 -Action Allow</pre>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="step-item">
+                  <div class="step-header" onclick="toggleStep(this)">
+                    <div class="step-num warn">!</div>
+                    <div class="step-title">Set Flask to Auto-Start on Boot</div>
+                    <svg class="step-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+                  </div>
+                  <div class="step-body">
+                    <div class="step-inner">
+                      <p>Created a Windows Scheduled Task to start Flask automatically on reboot.</p>
+                      <div class="fix-box">
+                        <span class="fix-label">Mistake</span>
+                        <span class="fix-text">First attempt used just <code>python</code> as the executable. After reboot the task failed with error code 2147942402 — the SYSTEM account couldn't find Python because it wasn't in the SYSTEM PATH.</span>
+                      </div>
+                      <div class="fix-box">
+                        <span class="fix-label">Fix</span>
+                        <span class="fix-text">Ran <code>where.exe python</code> to get the full path. Deleted the broken task and recreated it using the full absolute path to python.exe. Flask auto-started correctly after the next reboot.</span>
+                      </div>
+                      <pre>where.exe python
+# Result: C:\Users\Administrator\AppData\Local\Python\bin\python.exe
+
+Unregister-ScheduledTask -TaskName "AD Portal Flask API" -Confirm:$false
+# Recreated task with full python.exe path, running as SYSTEM at startup
+Start-ScheduledTask -TaskName "AD Portal Flask API"</pre>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="step-item">
+                  <div class="step-header" onclick="toggleStep(this)">
+                    <div class="step-num">5</div>
+                    <div class="step-title">Deploy & Test the Web Portal</div>
+                    <svg class="step-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+                  </div>
+                  <div class="step-body">
+                    <div class="step-inner">
+                      <p>Saved <strong>ad-portal.html</strong> to the Desktop of a client PC. Set the API_BASE variable inside the file to the Domain Controller's IP on port 5000. Opened it in a browser, submitted a test onboarding form, and verified the new user appeared in <strong>Active Directory Users and Computers</strong>.</p>
+                      <pre># No install needed on client — just open ad-portal.html in a browser
+# User created under: OU=Users,OU=homelab,DC=HomeLab,DC=local
+# Action logged to: C:\Scripts\portal-log.csv on the DC</pre>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- CODE SAMPLE -->
+              <span class="acc-sub-label" style="margin-top:1.5rem">// code sample — Onboard-User.ps1</span>
+              <p>The PowerShell script that Flask calls when a new user is submitted through the portal. It builds the username, checks for duplicates, creates the AD account with all the correct properties, and adds them to the specified security groups.</p>
+
+              <div class="code-block">
+                <div class="code-block-header">
+                  <span class="code-block-lang">POWERSHELL</span>
+                  <span class="code-block-name">Onboard-User.ps1</span>
+                </div>
+                <pre><span class="code-cm"># Flask calls this automatically when the form is submitted</span>
+
+<span class="code-kw">param</span>(
+    [Parameter(Mandatory)][string]<span class="code-var">$FirstName</span>,
+    [Parameter(Mandatory)][string]<span class="code-var">$LastName</span>,
+    [Parameter(Mandatory)][string]<span class="code-var">$Title</span>,
+    [Parameter(Mandatory)][string]<span class="code-var">$Department</span>,
+    [Parameter(Mandatory)][string]<span class="code-var">$Email</span>,
+    [string]<span class="code-var">$Office</span>       = <span class="code-str">"Head Office"</span>,
+    [string]<span class="code-var">$Manager</span>      = <span class="code-str">""</span>,
+    [string]<span class="code-var">$Groups</span>       = <span class="code-str">""</span>,
+    [string]<span class="code-var">$TempPassword</span> = <span class="code-str">"Welcome@2024!"</span>
+)
+
+<span class="code-cm"># Build the username — first initial + last name → jsmith</span>
+<span class="code-var">$Username</span> = (<span class="code-var">$FirstName</span>.Substring(0,1) + <span class="code-var">$LastName</span>).ToLower() -replace <span class="code-str">'[^a-z0-9]'</span>, <span class="code-str">''</span>
+
+<span class="code-cm"># If jsmith exists, try jsmith1, jsmith2, etc.</span>
+<span class="code-var">$Counter</span> = 1
+<span class="code-var">$Base</span> = <span class="code-var">$Username</span>
+<span class="code-kw">while</span> (<span class="code-fn">Get-ADUser</span> -Filter <span class="code-str">"SamAccountName -eq '$Username'"</span> -ErrorAction SilentlyContinue) {
+    <span class="code-var">$Username</span> = <span class="code-str">"$Base$Counter"</span>
+    <span class="code-var">$Counter</span>++
+}
+
+<span class="code-cm"># Create the AD user</span>
+<span class="code-fn">New-ADUser</span> `
+    -SamAccountName        <span class="code-var">$Username</span> `
+    -UserPrincipalName     <span class="code-str">"$Username@HomeLab.local"</span> `
+    -Name                  <span class="code-str">"$FirstName $LastName"</span> `
+    -GivenName             <span class="code-var">$FirstName</span> `
+    -Surname               <span class="code-var">$LastName</span> `
+    -Title                 <span class="code-var">$Title</span> `
+    -Department            <span class="code-var">$Department</span> `
+    -EmailAddress          <span class="code-var">$Email</span> `
+    -AccountPassword       (<span class="code-fn">ConvertTo-SecureString</span> <span class="code-var">$TempPassword</span> -AsPlainText -Force) `
+    -Enabled               <span class="code-var">$true</span> `
+    -ChangePasswordAtLogon <span class="code-var">$true</span> `
+    -Path                  <span class="code-str">"OU=Users,OU=homelab,DC=HomeLab,DC=local"</span>
+
+<span class="code-cm"># Add to security groups</span>
+<span class="code-kw">foreach</span> (<span class="code-var">$Group</span> <span class="code-kw">in</span> (<span class="code-var">$Groups</span> -split <span class="code-str">","</span>)) {
+    <span class="code-fn">Add-ADGroupMember</span> -Identity <span class="code-var">$Group</span>.Trim() -Members <span class="code-var">$Username</span>
+}
+
+<span class="code-fn">Write-Host</span> <span class="code-str">"ONBOARDING COMPLETE: $Username created in HomeLab.local"</span></pre>
+              </div>
+
+              <span class="acc-sub-label">// planned improvements</span>
+              <div class="next-steps">
+                <div class="next-item">Email notifications to manager when a user is onboarded (Python smtplib)</div>
+                <div class="next-item">User search feature — look up existing AD users before offboarding</div>
+                <div class="next-item">Password reset tab — reset any user's AD password from the portal</div>
+                <div class="next-item">Log viewer inside the portal reading portal-log.csv from the DC</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ENTRY 3 — COMING SOON -->
+        <div class="acc-item" style="opacity:0.55">
+          <div class="acc-header">
+            <div class="acc-num" style="border-color:rgba(14,165,233,0.25);background:rgba(14,165,233,0.08);color:var(--accent2)">3</div>
+            <div class="acc-title">Group Policy & Security Hardening</div>
+            <span class="acc-badge soon">Coming Soon</span>
+            <svg class="acc-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+          </div>
+        </div>
+
       </div>
+    </div>
+  </section>
 
-      <div class="divider"></div>
-
-      <!-- STEP 8 -->
-      <div class="doc-step">
-        <h3><span class="step-num">8</span> DNS & Troubleshooting</h3>
-        <p>Encountered DNS resolution issues during the domain join process. Fixed by correcting the DNS server settings on the client to point to the Domain Controller's IP instead of the router.</p>
-        <pre>- Fixed nslookup failure on client
-- Corrected DNS server to point at DC IP
-- Verified domain resolution with nslookup syd-lab.local</pre>
+  <section class="section" style="background:var(--bg2)">
+    <div class="section-inner">
+      <div style="margin-top:0.5rem">
+        <a href="Enterprise Infrastructure.html" class="btn">← Back to Enterprise Infrastructure</a>
       </div>
-
-      <div class="divider"></div>
-
-      <!-- STEP 9 -->
-      <div class="doc-step">
-        <h3><span class="step-num">9</span> Future Automation</h3>
-        <p>Next phase is automating repetitive AD tasks using PowerShell and Group Policy Objects — removing the need to create users or apply settings manually.</p>
-        <pre>- Bulk user creation scripts via PowerShell
-- Automated AD provisioning workflows
-- GPO deployment for security policies</pre>
-      </div>
-
-      <div class="divider"></div>
-      <a href="Enterprise Infrastructure.html" class="btn btn-ghost">← Back to Enterprise Infrastructure</a>
     </div>
   </section>
 </main>
 
 <footer>© 2026 Matthew Mahasay — <a href="../index.html">Back to Home</a></footer>
+
+<script>
+function toggleAcc(header) {
+  const item = header.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.acc-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+function toggleStep(header) {
+  const item = header.parentElement;
+  item.classList.toggle('open');
+}
+</script>
 
 </body>
 </html>
